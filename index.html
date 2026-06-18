@@ -1,260 +1,291 @@
-<!-- Ultimate Game Stash file--> 
-<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
-<!-- Made by Genizy-->
-
-<!DOCTYPE html>
-<html lang="en-US">
-
+"<!DOCTYPE html>
+<html lang=\"en\">
 <head>
-    <base href="https://rawcdn.githack.com/genizy/google-class/main/gdlite/">
-    <title>Geometry Dash</title>
-    <link rel="icon" type="image/png" href="https://e3334afd.cf-nate.pages.dev/0/g/geodash/game/splash.png">
-    <meta name="description" content="Play Geometry Dash Lite Online For Free on Chromebook, PC, Windows, Desktop in Chrome and modern browsers.">
-    <link rel="canonical" href="https://gamecomets.com/game/geometry-dash-lite/" />
-    <meta name="robots" content="noindex, nofollow">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="themes/geometrydashlite.io/rs/css/home.css?v=1">
+<meta charset=\"UTF-8\" />
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+<title>HTML Source Viewer</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161a22;
+    --border: #262b36;
+    --text: #e6e8eb;
+    --muted: #8b95a7;
+    --accent: #7cf1c2;
+    --accent-2: #f5a86b;
+    --danger: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 24px 32px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  h1 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  h1 span { color: var(--accent); }
+  p.sub { margin: 0; color: var(--muted); font-size: 13px; }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    flex-wrap: wrap;
+  }
+  input[type=\"url\"] {
+    flex: 1;
+    min-width: 260px;
+    background: #0b0d12;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input[type=\"url\"]:focus { border-color: var(--accent); }
+
+  button, select {
+    background: var(--accent);
+    color: #0b0d12;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.15s;
+  }
+  button:hover { transform: translateY(-1px); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  select {
+    background: #0b0d12;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .status {
+    padding: 8px 32px;
+    font-size: 12px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    min-height: 30px;
+  }
+  .status.error { color: var(--danger); }
+  .status.ok { color: var(--accent); }
+
+  main {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+  }
+  pre {
+    margin: 0;
+    padding: 24px 32px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #d6dae1;
+  }
+  /* simple syntax tinting */
+  .tag { color: #7cf1c2; }
+  .attr { color: #f5a86b; }
+  .val { color: #b9a6ff; }
+  .com { color: #6b7280; font-style: italic; }
+  .doctype { color: #8b95a7; }
+
+  footer {
+    padding: 10px 32px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .placeholder {
+    padding: 80px 32px;
+    text-align: center;
+    color: var(--muted);
+  }
+  .placeholder code {
+    background: var(--panel);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--accent-2);
+  }
+</style>
 </head>
-<meta name="cf-2fa-verify" content="GpoihhhSRQknehLQkEtXM">
-
 <body>
-    <style>
-        html {
-            box-sizing: border-box;
-        }
-        
-        *,
-        *:before,
-        *:after {
-            box-sizing: inherit;
-        }
-        
-        body {
-            margin: 0;
-            background-image: linear-gradient(rgb(0, 0, 0), rgb(0, 102, 255));
-            overflow: hidden;
-        }
-        
-        #gameContainer {
-            width: 100vw;
-            height: 100vh;
-        }
-        
-        canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        
-        canvas+* {
-            z-index: 2;
-        }
-        
-        .container {
-            max-width: 1600px;
-            position: relative;
-        }
-        
-        .posImg {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .logo {
-            position: absolute;
-            display: block;
-            max-width: 100vw;
-            max-height: 70vh;
-            top: 300px;
-        }
-        
-        .pos_progress {
-            position: absolute;
-            bottom: 15%;
-            width: 100%;
-        }
-        
-        .progress {
-            margin: 1.5em auto;
-            max-width: 436px;
-            height: auto;
-            display: none;
-            position: relative;
-        }
-        
-        .full {
-            width: 97%;
-            transform-origin: top left;
-        }
-        
-        .box_process {
-            width: 100%;
-        }
-        
-        .process {
-            width: 98%;
-        }
-        
-        .progress .posfull,
-        .progress .posbox {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .progress .posfull {
-            top: 8px;
-            z-index: 1;
-        }
-        
-        .progress .posbox {
-            top: 0;
-            z-index: 2;
-        }
-        
-        #loader {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-image: linear-gradient(rgb(0, 0, 0), rgb(0, 102, 255));
-        }
-        
-        .pos_spinner {
-            position: absolute;
-            top: 70%;
-            left: 50%;
-            transform: translate(-30%, -50%);
-        }
-        
-        .spinner,
-        .spinner:after {
-            display: none;
-            border-radius: 50%;
-            width: 5em;
-            height: 5em;
-        }
-        
-        .spinner {
-            margin: 10px;
-            font-size: 10px;
-            position: relative;
-            text-indent: -9999em;
-            border-top: 1.1em solid rgba(255, 255, 255, 0.2);
-            border-right: 1.1em solid rgba(255, 255, 255, 0.2);
-            border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
-            border-left: 1.1em solid #ffffff;
-            transform: translateZ(0);
-            animation: spinner-spin 1.1s infinite linear;
-        }
-        
-        @keyframes spinner-spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-    <div id="gameContainer"></div>
-    <div id="loader"><img class="logo" src="image/loading.png?v=1">
-        <div class="spinner"></div>
-        <div class=" pos_progress">
-            <div class="progress">
-                <div class="posfull"><img class="full" src="image/process_bar_back.png"></div>
-                <div class="posbox"><img class="box_process" src="image/process_bar_front.png"></div>
-            </div>
-        </div>
-        <script src="Build/UnityLoader.js"></script>
-        <script>
-            var gameInstance = UnityLoader.instantiate("gameContainer", "Build/GeometryDashLite.json", {
-                onProgress: UnityProgress
-            });
+  <header>
+    <h1>HTML Source <span>Viewer</span></h1>
+    <p class=\"sub\">Paste a URL and view the raw HTML returned by that page.</p>
+  </header>
 
-            function UnityProgress(gameInstance, progress) {
-                if (!gameInstance.Module) {
-                    return;
-                }
-                const loader = document.querySelector("#loader");
-                if (!gameInstance.progress) {
-                    const progress = document.querySelector("#loader .progress");
-                    progress.style.display = "block";
-                    gameInstance.progress = progress.querySelector(".full");
-                    loader.querySelector(".spinner").style.display = "none";
-                }
-                gameInstance.progress.style.transform = `scaleX(${progress})`;
-                if (progress === 1 && !gameInstance.removeTimeout) {
-                    gameInstance.removeTimeout = setTimeout(function() {
-                        loader.style.display = "none";
-                    }, 2000);
-                }
-            }
-        </script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                let buttondiv = document.getElementsByTagName('button');
-                for (let i = 0; i < buttondiv.length; i++) {
-                    if (buttondiv[i].innerHTML == "OK") {
-                        buttondiv[i].click();
-                    }
-                }
-                setTimeout(function() {
-                    let buttonok = document.getElementsByTagName('button');
-                    for (let i = 0; i < buttondiv.length; i++) {
-                        if (buttonok[i].innerHTML == "OK") {
-                            buttonok[i].click();
-                        }
-                    }
-                }, 1000);
-            });
-        </script>
-        <script src="themes/geometrydashlite.io/rs/js/jquery-3.4.1.min.js"></script>
-        <script>
-            function ToggleInfo() {
-                if ($('button.hide-main-panel').children('i')[0].textContent != 'Info') {
-                    $("div.main-panel").css('width', '0px');
-                    $("div.main-panel-ads").css('display', 'none');
-                    $("div.main-panel-content").css('display', 'none');
-                    $('button.hide-main-panel').children('i').html('Info');
-                    console.log('Info');
-                } else {
-                    $("div.main-panel").css('width', $("div.main-panel").css('max-width'));
-                    $("div.main-panel-ads").css('display', 'block');
-                    $("div.main-panel-content").css('display', 'block');
-                    $('button.hide-main-panel').children('i').html('>>');
-                    console.log('>>');
-                }
-            }
+  <form class=\"controls\" id=\"form\">
+    <input type=\"url\" id=\"url\" placeholder=\"https://example.com\" required autofocus />
+    <select id=\"proxy\" title=\"Proxy provider\">
+      <option value=\"allorigins\">AllOrigins</option>
+      <option value=\"corsproxy\">corsproxy.io</option>
+      <option value=\"codetabs\">codetabs</option>
+      <option value=\"direct\">No proxy (direct)</option>
+    </select>
+    <button type=\"submit\" id=\"go\">Fetch HTML</button>
+    <button type=\"button\" id=\"copy\">Copy</button>
+    <button type=\"button\" id=\"download\">Download</button>
+  </form>
 
-            function ShowInfo() {
-                $("div.main-panel").css('width', $("div.main-panel").css('max-width'));
-                $("div.main-panel-ads").css('display', 'block');
-                $("div.main-panel-content").css('display', 'block');
-                $('button.hide-main-panel').children('i').html('>>');
-            }
+  <div class=\"status\" id=\"status\">Ready.</div>
 
-            function HideInfo() {
-                $("div.main-panel").css('width', '0px');
-                $("div.main-panel-ads").css('display', 'none');
-                $("div.main-panel-content").css('display', 'none');
-                $('button.hide-main-panel').children('i').html('Info');
-            }
-            $('button.hide-main-panel').click(function() {
-                console.log('a');
-                ToggleInfo();
-            });
-        </script>
+  <main>
+    <div class=\"placeholder\" id=\"placeholder\">
+      Enter a URL above and press <code>Fetch HTML</code>.
+    </div>
+    <pre id=\"output\" hidden></pre>
+  </main>
+
+  <footer>
+    <span id=\"meta\">—</span>
+    <span>Tip: switch proxy if a site blocks one.</span>
+  </footer>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const form = $('form'), urlInput = $('url'), proxySel = $('proxy');
+  const statusEl = $('status'), output = $('output'), placeholder = $('placeholder');
+  const meta = $('meta'), goBtn = $('go');
+
+  let lastHtml = '';
+  let lastUrl = '';
+
+  function setStatus(msg, kind='') {
+    statusEl.textContent = msg;
+    statusEl.className = 'status ' + kind;
+  }
+
+  function buildProxyUrl(target, provider) {
+    const enc = encodeURIComponent(target);
+    switch (provider) {
+      case 'allorigins':
+        return `https://api.allorigins.win/raw?url=${enc}`;
+      case 'corsproxy':
+        return `https://corsproxy.io/?${enc}`;
+      case 'codetabs':
+        return `https://api.codetabs.com/v1/proxy/?quest=${target}`;
+      case 'direct':
+      default:
+        return target;
+    }
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlight(html) {
+    let s = escapeHtml(html);
+    // comments
+    s = s.replace(/&lt;!--[\s\S]*?--&gt;/g, m => `<span class=\"com\">${m}</span>`);
+    // doctype
+    s = s.replace(/&lt;!DOCTYPE[^&]*&gt;/gi, m => `<span class=\"doctype\">${m}</span>`);
+    // tags
+    s = s.replace(/&lt;(\/?[a-zA-Z][\w-]*)([^&]*?)&gt;/g, (m, tag, attrs) => {
+      const attrPart = attrs.replace(/([\w:-]+)=(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;)/g,
+        (_, a, v) => `<span class=\"attr\">${a}</span>=<span class=\"val\">${v}</span>`);
+      return `&lt;<span class=\"tag\">${tag}</span>${attrPart}&gt;`;
+    });
+    return s;
+  }
+
+  async function fetchHtml(targetUrl, provider) {
+    const proxied = buildProxyUrl(targetUrl, provider);
+    const res = await fetch(proxied, { method: 'GET' });
+    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    const text = await res.text();
+    return text;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let target = urlInput.value.trim();
+    if (!target) return;
+    if (!/^https?:\/\//i.test(target)) target = 'https://' + target;
+    lastUrl = target;
+
+    goBtn.disabled = true;
+    setStatus(`Fetching ${target}…`);
+    placeholder.hidden = true;
+    output.hidden = false;
+    output.innerHTML = '';
+
+    const providers = [proxySel.value];
+    // fallback order if user-selected one fails
+    for (const p of ['allorigins','corsproxy','codetabs']) {
+      if (!providers.includes(p)) providers.push(p);
+    }
+
+    let lastErr = null;
+    for (const p of providers) {
+      try {
+        setStatus(`Trying proxy: ${p}…`);
+        const html = await fetchHtml(target, p);
+        lastHtml = html;
+        output.innerHTML = highlight(html);
+        const bytes = new Blob([html]).size;
+        setStatus(`Loaded via ${p} — ${html.length.toLocaleString()} chars (${bytes.toLocaleString()} bytes)`, 'ok');
+        meta.textContent = `${target} · ${p}`;
+        goBtn.disabled = false;
+        return;
+      } catch (err) {
+        lastErr = err;
+        console.warn(`Proxy ${p} failed:`, err);
+      }
+    }
+
+    setStatus(`Failed to fetch. Last error: ${lastErr?.message || lastErr}`, 'error');
+    output.textContent = '';
+    placeholder.hidden = false;
+    goBtn.disabled = false;
+  });
+
+  $('copy').addEventListener('click', async () => {
+    if (!lastHtml) return setStatus('Nothing to copy yet.', 'error');
+    try {
+      await navigator.clipboard.writeText(lastHtml);
+      setStatus('Copied raw HTML to clipboard.', 'ok');
+    } catch {
+      setStatus('Clipboard blocked by browser.', 'error');
+    }
+  });
+
+  $('download').addEventListener('click', () => {
+    if (!lastHtml) return setStatus('Nothing to download yet.', 'error');
+    const blob = new Blob([lastHtml], { type: 'text/html' });
+    const a = document.createElement('a');
+    const name = (lastUrl.replace(/^https?:\/\//,'').replace(/[^a-z0-9.-]+/gi,'_') || 'page') + '.html';
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+</script>
 </body>
-
 </html>
+"
