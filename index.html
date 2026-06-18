@@ -3,7 +3,7 @@
 <head>
 <meta charset=\"UTF-8\" />
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
-<title>HTML Source Viewer</title>
+<title>HTML Viewer</title>
 <style>
   :root {
     --bg: #0f1115;
@@ -12,7 +12,6 @@
     --text: #e6e8eb;
     --muted: #8b95a7;
     --accent: #7cf1c2;
-    --accent-2: #f5a86b;
     --danger: #ff6b6b;
   }
   * { box-sizing: border-box; }
@@ -22,158 +21,108 @@
     background: var(--bg);
     color: var(--text);
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
   }
-  header {
-    padding: 24px 32px 16px;
-    border-bottom: 1px solid var(--border);
+  .card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
   }
   h1 {
-    margin: 0 0 4px;
-    font-size: 20px;
+    margin: 0 0 6px;
+    font-size: 22px;
     letter-spacing: -0.01em;
-    font-weight: 600;
   }
   h1 span { color: var(--accent); }
-  p.sub { margin: 0; color: var(--muted); font-size: 13px; }
+  p.sub { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
 
-  .controls {
-    display: flex;
-    gap: 10px;
-    padding: 16px 32px;
-    border-bottom: 1px solid var(--border);
-    background: var(--panel);
-    flex-wrap: wrap;
-  }
+  form { display: flex; gap: 10px; flex-wrap: wrap; }
   input[type=\"url\"] {
     flex: 1;
-    min-width: 260px;
+    min-width: 240px;
     background: #0b0d12;
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-radius: 8px;
     font-family: inherit;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.15s;
   }
   input[type=\"url\"]:focus { border-color: var(--accent); }
-
-  button, select {
+  button {
     background: var(--accent);
     color: #0b0d12;
     border: none;
-    padding: 10px 18px;
+    padding: 12px 20px;
     border-radius: 8px;
     font-family: inherit;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: transform 0.1s, opacity 0.15s;
   }
-  button:hover { transform: translateY(-1px); }
-  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  label.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--muted);
+  }
   select {
     background: #0b0d12;
     color: var(--text);
     border: 1px solid var(--border);
-    font-weight: 400;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
   }
-
   .status {
-    padding: 8px 32px;
+    margin-top: 14px;
     font-size: 12px;
     color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    min-height: 30px;
+    min-height: 18px;
   }
   .status.error { color: var(--danger); }
   .status.ok { color: var(--accent); }
-
-  main {
-    flex: 1;
-    overflow: auto;
-    padding: 0;
-  }
-  pre {
-    margin: 0;
-    padding: 24px 32px;
-    white-space: pre-wrap;
-    word-break: break-word;
-    font-size: 13px;
-    line-height: 1.55;
-    color: #d6dae1;
-  }
-  /* simple syntax tinting */
-  .tag { color: #7cf1c2; }
-  .attr { color: #f5a86b; }
-  .val { color: #b9a6ff; }
-  .com { color: #6b7280; font-style: italic; }
-  .doctype { color: #8b95a7; }
-
-  footer {
-    padding: 10px 32px;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .placeholder {
-    padding: 80px 32px;
-    text-align: center;
-    color: var(--muted);
-  }
-  .placeholder code {
-    background: var(--panel);
-    padding: 2px 8px;
-    border-radius: 4px;
-    color: var(--accent-2);
-  }
 </style>
 </head>
 <body>
-  <header>
-    <h1>HTML Source <span>Viewer</span></h1>
-    <p class=\"sub\">Paste a URL and view the raw HTML returned by that page.</p>
-  </header>
+  <div class=\"card\">
+    <h1>HTML <span>Viewer</span></h1>
+    <p class=\"sub\">Enter a URL — the fetched HTML will render in this same tab.</p>
 
-  <form class=\"controls\" id=\"form\">
-    <input type=\"url\" id=\"url\" placeholder=\"https://example.com\" required autofocus />
-    <select id=\"proxy\" title=\"Proxy provider\">
-      <option value=\"allorigins\">AllOrigins</option>
-      <option value=\"corsproxy\">corsproxy.io</option>
-      <option value=\"codetabs\">codetabs</option>
-      <option value=\"direct\">No proxy (direct)</option>
-    </select>
-    <button type=\"submit\" id=\"go\">Fetch HTML</button>
-    <button type=\"button\" id=\"copy\">Copy</button>
-    <button type=\"button\" id=\"download\">Download</button>
-  </form>
+    <form id=\"form\">
+      <input type=\"url\" id=\"url\" placeholder=\"https://example.com\" required autofocus />
+      <button type=\"submit\" id=\"go\">Load</button>
+    </form>
 
-  <div class=\"status\" id=\"status\">Ready.</div>
+    <label class=\"row\">
+      Proxy:
+      <select id=\"proxy\">
+        <option value=\"allorigins\">AllOrigins</option>
+        <option value=\"corsproxy\">corsproxy.io</option>
+        <option value=\"codetabs\">codetabs</option>
+        <option value=\"direct\">No proxy (direct)</option>
+      </select>
+      <span style=\"margin-left:auto\">Tip: switch proxy if a site blocks one.</span>
+    </label>
 
-  <main>
-    <div class=\"placeholder\" id=\"placeholder\">
-      Enter a URL above and press <code>Fetch HTML</code>.
-    </div>
-    <pre id=\"output\" hidden></pre>
-  </main>
-
-  <footer>
-    <span id=\"meta\">—</span>
-    <span>Tip: switch proxy if a site blocks one.</span>
-  </footer>
+    <div class=\"status\" id=\"status\">Ready.</div>
+  </div>
 
 <script>
   const $ = (id) => document.getElementById(id);
   const form = $('form'), urlInput = $('url'), proxySel = $('proxy');
-  const statusEl = $('status'), output = $('output'), placeholder = $('placeholder');
-  const meta = $('meta'), goBtn = $('go');
-
-  let lastHtml = '';
-  let lastUrl = '';
+  const statusEl = $('status'), goBtn = $('go');
 
   function setStatus(msg, kind='') {
     statusEl.textContent = msg;
@@ -183,43 +132,44 @@
   function buildProxyUrl(target, provider) {
     const enc = encodeURIComponent(target);
     switch (provider) {
-      case 'allorigins':
-        return `https://api.allorigins.win/raw?url=${enc}`;
-      case 'corsproxy':
-        return `https://corsproxy.io/?${enc}`;
-      case 'codetabs':
-        return `https://api.codetabs.com/v1/proxy/?quest=${target}`;
+      case 'allorigins': return `https://api.allorigins.win/raw?url=${enc}`;
+      case 'corsproxy':  return `https://corsproxy.io/?${enc}`;
+      case 'codetabs':   return `https://api.codetabs.com/v1/proxy/?quest=${target}`;
       case 'direct':
-      default:
-        return target;
+      default:           return target;
     }
-  }
-
-  function escapeHtml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  function highlight(html) {
-    let s = escapeHtml(html);
-    // comments
-    s = s.replace(/&lt;!--[\s\S]*?--&gt;/g, m => `<span class=\"com\">${m}</span>`);
-    // doctype
-    s = s.replace(/&lt;!DOCTYPE[^&]*&gt;/gi, m => `<span class=\"doctype\">${m}</span>`);
-    // tags
-    s = s.replace(/&lt;(\/?[a-zA-Z][\w-]*)([^&]*?)&gt;/g, (m, tag, attrs) => {
-      const attrPart = attrs.replace(/([\w:-]+)=(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;)/g,
-        (_, a, v) => `<span class=\"attr\">${a}</span>=<span class=\"val\">${v}</span>`);
-      return `&lt;<span class=\"tag\">${tag}</span>${attrPart}&gt;`;
-    });
-    return s;
   }
 
   async function fetchHtml(targetUrl, provider) {
     const proxied = buildProxyUrl(targetUrl, provider);
-    const res = await fetch(proxied, { method: 'GET' });
+    const res = await fetch(proxied);
     if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    const text = await res.text();
-    return text;
+    return await res.text();
+  }
+
+  // Inject a <base> tag so relative links/images/css resolve against the original site
+  function injectBase(html, baseHref) {
+    const baseTag = `<base href=\"${baseHref}\">`;
+    if (/<head[^>]*>/i.test(html)) {
+      return html.replace(/<head[^>]*>/i, (m) => m + baseTag);
+    }
+    if (/<html[^>]*>/i.test(html)) {
+      return html.replace(/<html[^>]*>/i, (m) => m + `<head>${baseTag}</head>`);
+    }
+    return `<head>${baseTag}</head>` + html;
+  }
+
+  function renderInSameTab(html, sourceUrl) {
+    let baseHref = sourceUrl;
+    try {
+      const u = new URL(sourceUrl);
+      baseHref = u.origin + u.pathname.replace(/[^/]*$/, '');
+    } catch {}
+    const finalHtml = injectBase(html, baseHref);
+    // Replace the entire document with the fetched HTML, in the same tab.
+    document.open();
+    document.write(finalHtml);
+    document.close();
   }
 
   form.addEventListener('submit', async (e) => {
@@ -227,16 +177,11 @@
     let target = urlInput.value.trim();
     if (!target) return;
     if (!/^https?:\/\//i.test(target)) target = 'https://' + target;
-    lastUrl = target;
 
     goBtn.disabled = true;
     setStatus(`Fetching ${target}…`);
-    placeholder.hidden = true;
-    output.hidden = false;
-    output.innerHTML = '';
 
     const providers = [proxySel.value];
-    // fallback order if user-selected one fails
     for (const p of ['allorigins','corsproxy','codetabs']) {
       if (!providers.includes(p)) providers.push(p);
     }
@@ -246,12 +191,8 @@
       try {
         setStatus(`Trying proxy: ${p}…`);
         const html = await fetchHtml(target, p);
-        lastHtml = html;
-        output.innerHTML = highlight(html);
-        const bytes = new Blob([html]).size;
-        setStatus(`Loaded via ${p} — ${html.length.toLocaleString()} chars (${bytes.toLocaleString()} bytes)`, 'ok');
-        meta.textContent = `${target} · ${p}`;
-        goBtn.disabled = false;
+        setStatus(`Loaded via ${p}. Rendering…`, 'ok');
+        renderInSameTab(html, target);
         return;
       } catch (err) {
         lastErr = err;
@@ -260,30 +201,7 @@
     }
 
     setStatus(`Failed to fetch. Last error: ${lastErr?.message || lastErr}`, 'error');
-    output.textContent = '';
-    placeholder.hidden = false;
     goBtn.disabled = false;
-  });
-
-  $('copy').addEventListener('click', async () => {
-    if (!lastHtml) return setStatus('Nothing to copy yet.', 'error');
-    try {
-      await navigator.clipboard.writeText(lastHtml);
-      setStatus('Copied raw HTML to clipboard.', 'ok');
-    } catch {
-      setStatus('Clipboard blocked by browser.', 'error');
-    }
-  });
-
-  $('download').addEventListener('click', () => {
-    if (!lastHtml) return setStatus('Nothing to download yet.', 'error');
-    const blob = new Blob([lastHtml], { type: 'text/html' });
-    const a = document.createElement('a');
-    const name = (lastUrl.replace(/^https?:\/\//,'').replace(/[^a-z0-9.-]+/gi,'_') || 'page') + '.html';
-    a.href = URL.createObjectURL(blob);
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(a.href);
   });
 </script>
 </body>
