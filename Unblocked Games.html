@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)https://quick-game-portal-1.preview.emergentagent.com/unblocked-games-standalone.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unblocked Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./Unblocked Games_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0a0a0f; --bg-1: #11111a; --bg-2: #181824;
+    --border: #262633; --border-strong: #34344a;
+    --text: #ececf2; --text-dim: #8a8a99;
+    --accent: #7c5cff; --accent-2: #00d4a8; --danger: #ff5577;
+    --shadow: 0 8px 30px rgba(0,0,0,0.45);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg-0); color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; min-height: 100vh; }
+  body::before {
+    content: ""; position: fixed; inset: 0;
+    background:
+      radial-gradient(800px 400px at 10% -10%, rgba(124,92,255,0.18), transparent 60%),
+      radial-gradient(700px 400px at 110% 10%, rgba(0,212,168,0.12), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 64px 24px 96px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 48px; flex-wrap: wrap; }
+  .title-block h1 { font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 700; margin: 0; letter-spacing: -0.02em; }
+  .title-block h1 .dot { color: var(--accent); }
+  .title-block p { margin: 8px 0 0; color: var(--text-dim); font-size: 0.95rem; }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .tile {
+    position: relative; aspect-ratio: 1 / 1; border-radius: 16px;
+    background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+    border: 1px solid var(--border); overflow: hidden; cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-decoration: none; color: inherit; user-select: none; padding: 12px;
+  }
+  .tile:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+  .tile.empty:hover { border-color: var(--accent); }
+  .tile.filled:hover { border-color: var(--accent-2); }
+  .tile .num { position: absolute; top: 10px; left: 12px; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.08em; }
+  .tile .favicon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden;
+  }
+  .tile .favicon img { width: 28px; height: 28px; display: block; }
+  .tile .favicon .fallback { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+  .tile .label { text-align: center; font-weight: 600; font-size: 0.9rem; word-break: break-word; line-height: 1.3; }
+  .tile .plus {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px dashed var(--border-strong); color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; font-weight: 300; transition: all 0.25s ease;
+  }
+  .tile.empty:hover .plus { color: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
+  .tile .edit {
+    position: absolute; bottom: 8px; right: 8px;
+    width: 26px; height: 26px; border-radius: 6px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--text-dim); display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; opacity: 0; transition: opacity 0.2s ease, background 0.2s ease;
+  }
+  .tile.filled:hover .edit { opacity: 1; }
+  .tile .edit:hover { background: rgba(255,85,119,0.15); color: var(--danger); }
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(5,5,10,0.7);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; z-index: 50; padding: 24px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--bg-2); border: 1px solid var(--border-strong);
+    border-radius: 18px; width: 100%; max-width: 440px; padding: 28px;
+    box-shadow: var(--shadow); animation: pop 0.2s ease;
+  }
+  @keyframes pop { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal h3 { margin: 0 0 6px; font-size: 1.25rem; font-weight: 600; }
+  .modal p.sub { margin: 0 0 22px; color: var(--text-dim); font-size: 0.875rem; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .field input {
+    width: 100%; background: var(--bg-1); border: 1px solid var(--border);
+    color: var(--text); padding: 12px 14px; border-radius: 10px;
+    font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s ease;
+  }
+  .field input:focus { border-color: var(--accent); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+  .btn { border: none; padding: 11px 18px; border-radius: 10px; font-family: inherit; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #6a4dff; transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-secondary { background: transparent; color: var(--text-dim); border: 1px solid var(--border-strong); }
+  .btn-secondary:hover { color: var(--text); }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(255,85,119,0.3); }
+  .btn-danger:hover { background: rgba(255,85,119,0.1); }
+  footer { margin-top: 56px; text-align: center; color: var(--text-dim); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title-block">
+        <h1>Unblocked Games<span class="dot">.</span></h1>
+        <p>Click an empty tile to add a link. Saved for everyone.</p>
+      </div>
+    </header>
+    <div class="grid" id="grid"><a class="tile filled" href="https://eaglercraftfree.github.io/eaglercraft/" target="_blank" rel="noopener noreferrer"><span class="num">01</span><div class="favicon"><img src="./Unblocked Games_files/favicons" alt="" referrerpolicy="no-referrer"></div><div class="label">EaglerCraft</div><span class="edit">✎</span></a><a class="tile filled" href="https://fellow-banana.github.io/Website-Unblocker/" target="_blank" rel="noopener noreferrer"><span class="num">02</span><div class="favicon"><img src="./Unblocked Games_files/favicons(1)" alt="" referrerpolicy="no-referrer"></div><div class="label">Link Unblocker (some websites say "refused to connect")</div><span class="edit">✎</span></a><a class="tile filled" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><span class="num">03</span><div class="favicon"><img src="./Unblocked Games_files/favicons(2)" alt="" referrerpolicy="no-referrer"></div><div class="label">Youtube</div><span class="edit">✎</span></a><a class="tile filled" href="https://poki.com/en/g/level-devil" target="_blank" rel="noopener noreferrer"><span class="num">04</span><div class="favicon"><img src="./Unblocked Games_files/favicons(3)" alt="" referrerpolicy="no-referrer"></div><div class="label">test</div><span class="edit">✎</span></a><button class="tile empty"><span class="num">05</span><div class="plus">+</div></button><button class="tile empty"><span class="num">06</span><div class="plus">+</div></button><button class="tile empty"><span class="num">07</span><div class="plus">+</div></button><button class="tile empty"><span class="num">08</span><div class="plus">+</div></button><button class="tile empty"><span class="num">09</span><div class="plus">+</div></button><button class="tile empty"><span class="num">10</span><div class="plus">+</div></button><button class="tile empty"><span class="num">11</span><div class="plus">+</div></button><button class="tile empty"><span class="num">12</span><div class="plus">+</div></button><button class="tile empty"><span class="num">13</span><div class="plus">+</div></button><button class="tile empty"><span class="num">14</span><div class="plus">+</div></button><button class="tile empty"><span class="num">15</span><div class="plus">+</div></button><button class="tile empty"><span class="num">16</span><div class="plus">+</div></button><button class="tile empty"><span class="num">17</span><div class="plus">+</div></button><button class="tile empty"><span class="num">18</span><div class="plus">+</div></button><button class="tile empty"><span class="num">19</span><div class="plus">+</div></button><button class="tile empty"><span class="num">20</span><div class="plus">+</div></button><button class="tile empty"><span class="num">21</span><div class="plus">+</div></button><button class="tile empty"><span class="num">22</span><div class="plus">+</div></button><button class="tile empty"><span class="num">23</span><div class="plus">+</div></button><button class="tile empty"><span class="num">24</span><div class="plus">+</div></button><button class="tile empty"><span class="num">25</span><div class="plus">+</div></button></div>
+    <footer>25 shared slots</footer>
+  </div>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <h3 id="modal-title">Add Game Link</h3>
+      <p class="sub" id="modal-sub">Paste a URL and give it a name.</p>
+      <div class="field">
+        <label for="input-name">Name</label>
+        <input type="text" id="input-name" placeholder="e.g. Slope">
+      </div>
+      <div class="field">
+        <label for="input-url">URL</label>
+        <input type="url" id="input-url" placeholder="https://...">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="delete-btn" style="display:none; margin-right:auto;">Remove</button>
+        <button class="btn btn-secondary" id="cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const TOTAL = 25;
+  const API = 'https://quick-game-portal-1.preview.emergentagent.com/api/games';
+
+  const grid = document.getElementById('grid');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalSub = document.getElementById('modal-sub');
+  const inputName = document.getElementById('input-name');
+  const inputUrl = document.getElementById('input-url');
+  const saveBtn = document.getElementById('save-btn');
+  const cancelBtn = document.getElementById('cancel-btn');
+  const deleteBtn = document.getElementById('delete-btn');
+
+  let editingIndex = null;
+  let links = new Array(TOTAL).fill(null);
+
+  function hostnameOf(url) {
+    try { return new URL(url).hostname.replace(/^www\./, ''); }
+    catch { return url; }
+  }
+  function faviconUrl(url) {
+    const host = hostnameOf(url);
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=64`;
+  }
+
+  async function fetchLinks() {
+    try {
+      const res = await fetch(API);
+      if (!res.ok) throw new Error('fetch failed');
+      const arr = await res.json();
+      const map = new Array(TOTAL).fill(null);
+      arr.forEach(item => {
+        if (typeof item.index === 'number' && item.index >= 0 && item.index < TOTAL) {
+          map[item.index] = { name: item.name, url: item.url };
+        }
+      });
+      links = map;
+    } catch (e) { console.error(e); }
+  }
+  async function saveLink(index, payload) {
+    const res = await fetch(`${API}/${index}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('save failed');
+    return res.json();
+  }
+  async function deleteLink(index) {
+    await fetch(`${API}/${index}`, { method: 'DELETE' });
+  }
+
+  function render() {
+    grid.innerHTML = '';
+    links.forEach((item, i) => {
+      const tile = document.createElement(item ? 'a' : 'button');
+      tile.className = 'tile ' + (item ? 'filled' : 'empty');
+      const num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = String(i + 1).padStart(2, '0');
+      tile.appendChild(num);
+      if (item) {
+        tile.href = item.url; tile.target = '_blank'; tile.rel = 'noopener noreferrer';
+        const fav = document.createElement('div');
+        fav.className = 'favicon';
+        const img = document.createElement('img');
+        img.src = faviconUrl(item.url); img.alt = ''; img.referrerPolicy = 'no-referrer';
+        img.onerror = () => {
+          fav.innerHTML = '';
+          const fb = document.createElement('span');
+          fb.className = 'fallback';
+          fb.textContent = (item.name || hostnameOf(item.url)).charAt(0).toUpperCase();
+          fav.appendChild(fb);
+        };
+        fav.appendChild(img);
+        tile.appendChild(fav);
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = item.name || hostnameOf(item.url);
+        tile.appendChild(label);
+        const edit = document.createElement('span');
+        edit.className = 'edit'; edit.textContent = '✎';
+        edit.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openModal(i, item); });
+        tile.appendChild(edit);
+      } else {
+        const plus = document.createElement('div');
+        plus.className = 'plus'; plus.textContent = '+';
+        tile.appendChild(plus);
+        tile.addEventListener('click', () => openModal(i, null));
+      }
+      grid.appendChild(tile);
+    });
+  }
+
+  function openModal(index, existing) {
+    editingIndex = index;
+    if (existing) {
+      modalTitle.textContent = 'Edit Game Link';
+      modalSub.textContent = 'Update the name or URL for this tile.';
+      inputName.value = existing.name || ''; inputUrl.value = existing.url || '';
+      deleteBtn.style.display = 'inline-block';
+    } else {
+      modalTitle.textContent = 'Add Game Link';
+      modalSub.textContent = 'Paste a URL and give it a name.';
+      inputName.value = ''; inputUrl.value = '';
+      deleteBtn.style.display = 'none';
+    }
+    modal.classList.add('open');
+    setTimeout(() => inputUrl.focus(), 50);
+  }
+  function closeModal() { modal.classList.remove('open'); editingIndex = null; }
+
+  async function handleSave() {
+    if (editingIndex === null) return;
+    const url = inputUrl.value.trim();
+    if (!url) { inputUrl.focus(); return; }
+    saveBtn.disabled = true;
+    try {
+      const saved = await saveLink(editingIndex, { name: inputName.value.trim(), url });
+      links[editingIndex] = { name: saved.name, url: saved.url };
+      closeModal(); render();
+    } catch (e) { alert('Could not save. Please try again.'); }
+    finally { saveBtn.disabled = false; }
+  }
+  async function handleDelete() {
+    if (editingIndex === null) return;
+    try { await deleteLink(editingIndex); links[editingIndex] = null; closeModal(); render(); }
+    catch (e) { alert('Could not remove. Please try again.'); }
+  }
+
+  saveBtn.addEventListener('click', handleSave);
+  cancelBtn.addEventListener('click', closeModal);
+  deleteBtn.addEventListener('click', handleDelete);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Enter') handleSave();
+  });
+
+  (async function init() {
+    await fetchLinks(); render();
+    setInterval(async () => {
+      if (modal.classList.contains('open')) return;
+      await fetchLinks(); render();
+    }, 15000);
+  })();
+</script>
+<script defer="" src="./Unblocked Games_files/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;7f7b0fd8732c4326aae4b9d58d5c514a&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body></html>
